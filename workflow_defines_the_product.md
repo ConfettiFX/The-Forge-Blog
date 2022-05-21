@@ -1,6 +1,7 @@
 ---
 layout: post
 author: Kirill
+date: May 20, 2022
 ---
 
 There is a big problem in the game development industry that doesn't get enough attention, so I wanted to bring it up in this post 🙂
