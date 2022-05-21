@@ -108,3 +108,11 @@ It does not have to be this way 🙂
 There is a saying "Workflow defines the product" - investing and building better production workflow will lead to happier teams, better games and less production costs.
 
 Thank you for your attention!
+
+<script src="https://utteranc.es/client.js"
+        repo="https://github.com/ConfettiFX/The-Forge-Blog"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
