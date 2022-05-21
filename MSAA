@@ -1,0 +1,12 @@
+MSAA
+This week we discussed MSAA in one of our chat groups at The Forge Interactive. There are mostly two "groups" of MSAA techniques. Let me call the first one fixed-function MSAA and the second one programmable MSAA.
+
+Fixed-function MSAA
+Fixed-function MSAA was the original MSAA implementation that is supported by various APIs and usually implemented on the driver / software level. The original idea was based on a render architecture that draws geometry into a color and a depth buffer and then the driver/hardware does a resolve and downscaling from the MSAA'ed image to the swap chain image. 
+There are mostly two problems with that approach. It assumes that you directly render into color and depth buffer. For example a G-Buffer like setup wouldn't be supported because in most cases after the G-Buffer fill, geometric data is not rendered again.
+It was common to conclude that this type of MSAA is not flexible enough to support complex game engine architectures. Even with a forward renderer that just renders into color and depth, you would have to do this before the PostFX pipeline starts running. So all the quarter-sized render targets in PostFX will happily add their staircase patterns on top of the MSAA'ed image.
+With a Deferred Shading or Light Pre-pass Approach you really wanted to have MSAA that is more flexible to program.
+
+Programmable MSAA
+The main advantage of programmable MSAA is that you can determine where in the rendering pipeline you want to anti-alias the image. so let's looks a bit deeper into how to program MSAA this way.
+
