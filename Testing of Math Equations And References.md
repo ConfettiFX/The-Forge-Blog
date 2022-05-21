@@ -34,6 +34,8 @@ $\left(\begin{bmatrix} 1 \cr 3 \end{bmatrix} - \begin{bmatrix} 2 \cr 2 \end{bmat
 
 References:
 
+LaTex reference: https://en.wikibooks.org/wiki/LaTeX/Mathematics
+
 TeX Syntax in Mathjax: https://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm
 
 Tutorial:
