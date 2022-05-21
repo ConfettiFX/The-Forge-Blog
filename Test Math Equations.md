@@ -23,6 +23,10 @@ $$\begin{pmatrix}
   1&2&3\\
   4&5&6
   \end{array}\right]$$
+  
+Vectors:
+
+$\left(\begin{bmatrix} 1 \cr 3 \end{bmatrix} - \begin{bmatrix} 2 \cr 2 \end{bmatrix} \right) \cdot \begin{bmatrix} 4 \cr 4 \end{bmatrix}  =0$
 
 Tutorial:
 https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
