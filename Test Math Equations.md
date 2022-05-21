@@ -19,7 +19,7 @@ $$\begin{pmatrix}
   4&5&6
   \end{array}\right]$$
   
-  $$\left[\begin{array}
+  $$\left[\begin{array}{}
   1&2&3\\
   4&5&6
   \end{array}\right]$$
