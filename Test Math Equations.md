@@ -5,12 +5,12 @@ $$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
 Matrix example 
 $$\begin{pmatrix}a & b\\\ c & d\end{pmatrix}$$
 
-\begin{pmatrix}
+$$\begin{pmatrix}
  1 & a_1 & a_1^2 & \cdots & a_1^n \\
  1 & a_2 & a_2^2 & \cdots & a_2^n \\
  \vdots  & \vdots& \vdots & \ddots & \vdots \\
  1 & a_m & a_m^2 & \cdots & a_m^n    
- \end{pmatrix}
+ \end{pmatrix}$$
 
 Tutorial
 https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
