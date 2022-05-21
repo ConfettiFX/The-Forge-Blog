@@ -3,8 +3,6 @@ layout: post
 author: Kirill
 ---
 
-## Workflow defines the product.
-
 There is a big problem in the game development industry that doesn't get enough attention, so I wanted to bring it up in this post 🙂
 
 Most production workflows are terrible.
@@ -28,7 +26,7 @@ This is a small set of examples from real projects that are "obvious" - people a
 
 These are glaring and obvious issues, and most of the time there is some effort to solve them. Most of the time it's some form of distributed builds, which in my opinion is only delaying the inevitable.
 
-Note that this is not an exxageration, these are actual numbers from actual projects.
+Note that this is not an exageration, these are actual numbers from actual projects.
 
 #### Less obvious issues
 
@@ -40,7 +38,7 @@ This is a more interesting list of issues, also from real projects. People are g
 * The editor is not stable and often crashes.
 * The editor does not allow to remap the hotkeys.
 * The renderer does not use perceptual or physically-based parameters to define material or post process properties.
-* Some of the renderer features require additional manual work to function correctly (for example marking indoor/outdoor space manually)
+* Some of the renderer features require additional manual work to function correctly.
 
 These are the things that the production teams (art, level design, etc) have to deal with daily.
 What makes it less obvious is that people who use the toolset tend to not complain about clunky UI or editor crashes and find various workarounds instead.
@@ -51,7 +49,7 @@ Iteration time is of paramount importance. Every hour that somebody needs to wai
 
 Why is that so important?
 * It has a toll on team morale. People get frustrated and annoyed by low productivity, many often leave because of that.
-* It costs a lot of money. How much time your team has to wait for 1 hour until the build is finished? Multiply that by the hourly wage, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
+* It costs a lot of money. How much time does your team have to wait until the build is finished? Multiply that by the hourly wage, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
 * It's often one of the factors that lead to crunch. Low productivity means it takes more time to get the job done, but the deadlines stay the same.
 
 Please do not make bad editor UI 🙁
@@ -74,7 +72,7 @@ If this type of activity cannot be automated it has a huge negative value and hi
 
 #### It takes 3 days to build the shaders from scratch.
 
-Using node-based material editors, right 😃 ? In the absolute most cases long shader builds are caused by node-based material editor workflows.
+Using node-based material editors, right 😃 ? In most cases long shader builds are caused by node-based material editor workflows.
 
 Following our own advice, we have to suggest an alternative authoring workflow that does not generate 100k shaders.
 
@@ -85,6 +83,8 @@ Dooms rendering team implemented a clustered decal rendering system for their fo
 Since these are forward decals, you can write custom decal blending code - for example make "wet" decals that only modify the roughness of the underlying surface or make "burning" decals that modify the alpha value and generate alpha-tested holes in geometry (something that deferred decals and d-buffer decals are not able to do).
 
 Their forward renderer also allows to write custom shaders if you need them, with the idea that decals cover 80% of the authoring needs.
+
+It is important that decals is not the only alternative to node-based material systems. I believe that if we start to collectively think about better art workflows we can find other great ideas and improvements 🙂
 
 #### It takes 2 days to generate lightmaps for a single level
 
