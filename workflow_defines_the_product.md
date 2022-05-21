@@ -69,7 +69,7 @@ If this type of activity cannot be automated it has a huge negative value and hi
 
 #### It takes 3 days to build the shaders from scratch.
 
-Using node-based material editors, right :) ? In the absolute most cases long shader builds are caused by node-based material editor workflows.
+Using node-based material editors, right 😃 ? In the absolute most cases long shader builds are caused by node-based material editor workflows.
 
 Following our own advice, we have to suggest an alternative authoring workflow that does not generate 100k shaders.
 
