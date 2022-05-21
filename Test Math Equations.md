@@ -33,6 +33,7 @@ Vectors:
 $\left(\begin{bmatrix} 1 \cr 3 \end{bmatrix} - \begin{bmatrix} 2 \cr 2 \end{bmatrix} \right) \cdot \begin{bmatrix} 4 \cr 4 \end{bmatrix}  =0$
 
 References:
+
 TeX Syntax in Mathjax: https://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm
 
 Tutorial:
