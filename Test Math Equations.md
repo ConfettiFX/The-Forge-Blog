@@ -32,9 +32,8 @@ Vectors:
 
 $\left(\begin{bmatrix} 1 \cr 3 \end{bmatrix} - \begin{bmatrix} 2 \cr 2 \end{bmatrix} \right) \cdot \begin{bmatrix} 4 \cr 4 \end{bmatrix}  =0$
 
-TeX Syntax in Mathjax
-
-https://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm
+References:
+TeX Syntax in Mathjax: https://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm
 
 Tutorial:
 https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
