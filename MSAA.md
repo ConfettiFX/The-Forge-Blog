@@ -1,6 +1,13 @@
+
+---
+layout: post
+author: Wolfgang Engel
+date: May 22, 2022
+title: MSAA
+---
+
 # MSAA 
-### (Wolfgang Engel, last updated: May 22nd, 2022)
-This week we discussed MSAA in one of our chat groups at The Forge Interactive. This is an older topic now but I thought it might be interesting to refresh once's memory. There are mostly two "groups" of MSAA techniques. Let me call the first one fixed-function MSAA and the second one programmable MSAA.
+This week we discussed MSAA in one of our chat groups at The Forge Interactive. This is an older topic now but I thought it might be interesting to refresh once's memory and put it into a more modern context. There are mostly two "groups" of MSAA techniques. Let me call the first one fixed-function MSAA and the second one programmable MSAA.
 
 ## Fixed-function MSAA
 Fixed-function MSAA was the original MSAA implementation that is supported by various APIs and usually implemented on the driver / software level. The original idea was based on a render architecture that draws geometry into a color and a depth buffer and then the driver/hardware does a resolve and downscaling from the MSAA'ed image to the swap chain image. 
@@ -13,13 +20,13 @@ The main advantage of programmable MSAA is that you can determine where in the r
 
 ![MSAA](Images/MSAA/Overview%20MSAA.png)
 
-This image shows a best case scenario for MSAA. The quad is the pixel, each x marks a sample in that pixel. One thing to highlight is the 30 degree clockwise rotation of the samples. This is done because in games, lines that we want to anti-alias are quite often in a 45 degree angle, horizontal or vertical. So typically a 30 degree rotation works well.
-Now apart from the 30 degree rotation why would one prefer multi-sampling over super-sampling. After all we can just increase the render target size in each diretion by 2x and then we would have the number of pixels as we have samples in MSAA. The main adantage of MSAA is the support of color compression when MSAA is on. Hardware utilizes efficient color compression that might be offering 2x MSAA for the same bandwidth cost as no MSAA and then even 4x MSAA might not be much more than No MSAA. In contrast a super sampled setup might be 4x memory bandwidth. It a good assumption to make that memory bandwidth is not a big challenge with MSAA.
+This image shows a best case scenario for MSAA. The quad is the pixel, each x marks a sample in that pixel. One thing to highlight is the 30 degree clockwise rotation of the samples. This is done because in games, lines that we want to anti-alias are quite often in a 45 degree angle, horizontal or vertical. So typically a 30 degree rotation works well (Read more about this here [MJP]).
+Now apart from the 30 degree rotation why would one prefer multi-sampling over super-sampling. After all we can just increase the render target size in each diretion by 2x and then we would have the number of pixels as we have samples in MSAA. The main adantage of MSAA is the support of color compression when MSAA is on. Hardware utilizes efficient color compression that might be offering 2x MSAA for the same bandwidth cost as no MSAA and then even 4x MSAA might not be much more than No MSAA. In contrast a super sampled setup might be 4x memory bandwidth. It is a good assumption to make that memory bandwidth is not a big challenge with MSAA.
 So the remaining question is: how often does the pixel shader have to run? With 4x Super sampling it needs to run 4x more. Does it also have to run 4x more with multi-sampling? The answer is: it depends on how you program it.
 
 ### Using a Per-Pixel or Per-Sample Pixel Shader
-Let's assume we know where the polygon edges are and we want to execute a pixel shader that is reading the MSAA sample points only on those edges. The graphics APIs allow us to decide if a pixel shader runs per-sample or per-pixel in that case. So the idea would be that we execute the per-pixel pixel shader first and then run the per-sample pixel shader only on the samples that are important to anti-alias polygon edges. 
-This gives us a lot of flexibility. We can decide to run the whole PostFX pipeline with MSAA'ed render targets per pixel but then at the end run the per-sample shader over the polygon edges, or we can decide to run a per-sample shader on a render target that was created with 4x MSAA, just to avoid staircase effects there. In the Triangle Visibility Buffer we can shade the scene per-pixel but render per-sample. To go even one step further: MSAA is actually perfect for the Visibility Buffer: it causes the rasterizer and the depth test to run at a higher resolution than the render target(s), but a  pixel shader can still execute once per pixel. So if we use all quarter-resolution render target combined with 4x MSAA, then we should get exactly what we want: full-resolution coverage and depth testing, but half-resolution shading. Following this train of thought one step further: if you want to compare programmable shading like this to Nanite: Programmable MSAA offers a higher rasterizer and depth test resolution, allowing to render smaller triangles. That means you have hardware support for small triangle rendering without having to write a software raterizer. Because you run in native MSAA resolution, you even don't have to upscale the final image. This way of small triangle rendering is consistent with the software and hardware pipeline.
+Let's assume we know where the polygon edges are, we could execute a pixel shader that is reading the MSAA sample points only on those edges. The graphics APIs allow us to decide if a pixel shader runs per-sample or per-pixel in that case. So the idea would be that we execute the per-pixel pixel shader first and then run the per-sample pixel shader only on the samples that are important to anti-alias polygon edges. 
+This gives us a lot of flexibility. We can decide to run the whole PostFX pipeline with MSAA'ed render targets per pixel but then at the end run the per-sample shader over the polygon edges, or we can decide to run a per-sample shader on a render target in-between and at the end, just to avoid staircase effects there. In the Triangle Visibility Buffer we can shade the scene per-pixel but render per-sample. To go even one step further: MSAA is actually perfect for the Visibility Buffer: it causes the rasterizer and the depth test to run at a higher resolution than the render target(s), but a pixel shader can still execute once per pixel. So if we use all quarter-resolution render target combined with 4x MSAA, then we should get exactly what we want: full-resolution coverage and depth testing, but half-resolution shading. Following this train of thought one step further: if you want to compare programmable shading like this to Nanite: Programmable MSAA offers a higher rasterizer and depth test resolution, allowing to render smaller triangles. That means you have hardware support for small triangle rendering without having to write a software raterizer. Because you run in native MSAA resolution, you even don't have to upscale the final image. This way of small triangle rendering is consistent with the software and hardware pipeline.
 Going back to our assumption at the beginning of this paragraph: now how do we know where the polygon edges are?
 
 ### Tracking and storing Polygon Edges
@@ -27,7 +34,7 @@ If we know the edges of the polygons, we know the areas where to apply multi-sam
 One way to find out where in an image the polygon edges are is called Centroid Sampling that is widely supported in GPU hardware. 
 
 #### Centroid Sampling
-Here is an image that explains how centroid sampling works:
+Here is an image from one of my old slide decks that I used for teaching MSAA. It explains how centroid sampling works:
 
 ![Poly Edge Detection with Centroid Sampling](Images/MSAA/PolyEdge_DetectionwithCentroidSampling.png)
 
