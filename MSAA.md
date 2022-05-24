@@ -41,8 +41,7 @@ In this image you can see a yellow triangle crossing a pixel and covering two sa
 When the shift happens, the coordinates of the sampling point changes. In that case we know that there is a polygon edge.
 Pixels that are partly covered are detected using centroid sampling on the SV_Position register. If the sampling position shifted from the center, it's an edge pixel [Persson]. This is done by checking the fractional part of the position value. If it equals 0.5, there is o polygon edge.
 
-```
-// shader that fills the G-Buffer     
+```    
 struct PsIn 
 {
   centroid float4 position : SV_Position;  // for edge detection 
@@ -50,7 +49,7 @@ struct PsIn
 };
  
 // find polygon edge with centroid sampling
-bIsEdge = dot(abs(frac(In.position.xy) - 0.5), 1000.0);
+bIsEdge = abs(frac(In.position.xy) - 0.5) > 0.0f;
 ```
 
 Another way to discover polygon edges is to use SV_COVERAGE. It provides a bit field that indicates each of the samples covered by current primitives. For example a value of 0x09 (1001b) indicates that sample 0 and 3 are covered by the primitive.
@@ -60,7 +59,7 @@ bIsEdge = (uCovMask != 0x0F && uCovMask != 0)
 ```
 
 
-#### Storing Poloygon Edges in a Stencil Buffer
+#### Storing Polygon Edges in a Stencil Buffer
 With the knowledge of where the polygon edges are in the image, we can store this data in a stencil buffer.
 
 With the stencil buffer set, we can execute then two pixel shaders. One running per-pixel and one running per-sample:
@@ -76,7 +75,6 @@ renderer->setShader(lighting[p]);
 }
 ```
 Older platforms support running a per-sample pixel shader like this:
-
 ```
 // DirectX 10.1, 11, XBOX 360: execute pixel shader per sample
 struct PsIn 
@@ -100,7 +98,6 @@ float4 PSLightPass_EdgeSampleOnly(PsIn In) : SV_TARGET
 }
 ```
 Look for the SV_SAMPLEINDEX flag. More modern APIs have more flexible ways to do this.
-
 
 ## Conclusion
 The steps to utilize programmable Multi-sampling are:
