@@ -38,21 +38,30 @@ Here is an image from one of my old slide decks that I used for teaching MSAA. I
 ![Poly Edge Detection with Centroid Sampling](Images/MSAA/PolyEdge_DetectionwithCentroidSampling.png)
 
 In this image you can see a yellow triangle crossing a pixel and covering two sample points in that pixel. To reduce sampling artifacts for textures around poly edges the centroid sampling will shift the sampling point in-between the two sample points. 
-When the shift happens, the coordinates of the sampling point changes.  
+When the shift happens, the coordinates of the sampling point changes. In that case we know that there is a polygon edge.
+Pixels that are partly covered are detected using centroid sampling on the SV_Position register. If the sampling position shifted from the center, it's an edge pixel [Persson]. This is done by checking the fractional part of the position value. If it equals 0.5, there is o polygon edge.
 
-The following image lists one centroid sampling trick to detect polygon edges:
+```
+// shader that fills the G-Buffer     
+struct PsIn 
+{
+  centroid float4 position : SV_Position;  // for edge detection 
+…
+};
+ 
+// find polygon edge with centroid sampling
+bIsEdge = dot(abs(frac(In.position.xy) - 0.5), 1000.0);
+```
 
-![Poly Edge Detection with Centroid Sampling Part 2](Images/MSAA/PolyEdge_DetectionwithCentroidSampling_Part2.png)
+Another way to discover polygon edges is to use SV_COVERAGE. It provides a bit field that indicates each of the samples covered by current primitives. For example a value of 0x09 (1001b) indicates that sample 0 and 3 are covered by the primitive.
 
-By using the SV_Coverage flag we can actually tell which samples of the pixel are covered by the triangle by checking a bit mask.
+```
+bIsEdge = (uCovMask != 0x0F && uCovMask != 0)
+```
 
 
 #### Storing Poloygon Edges in a Stencil Buffer
 With the knowledge of where the polygon edges are in the image, we can store this data in a stencil buffer.
-
-```
-clip(BackBuffer.Sample(filter, In.texCoord).a - 0.5)
-```
 
 With the stencil buffer set, we can execute then two pixel shaders. One running per-pixel and one running per-sample:
 
@@ -66,11 +75,30 @@ renderer->setShader(lighting[p]);
 ...
 }
 ```
-
 Older platforms support running a per-sample pixel shader like this:
 
-![DX10.1 DX11 XBOX 360 per-sample shader](Images/MSAA/Per-SampleShader.png)
-
+```
+// DirectX 10.1, 11, XBOX 360: execute pixel shader per sample
+struct PsIn 
+{
+…
+  uint uSample : SV_SAMPLEINDEX;  // Sample frequency
+};
+ 
+float4 PSLightPass_EdgeSampleOnly(PsIn In) : SV_TARGET
+{
+   // Sample GBuffers
+   C = Color.Load( nScreenCoordinates, In.uSample);
+   Norm = Normal.Load( nScreenCoordinates, In.uSample);
+   D = Depth.Load( nScreenCoordinates, In.uSample);
+			
+   // extract data from GBuffers
+  //…
+			
+  // do the lighting
+  return LightEquation(…);
+}
+```
 Look for the SV_SAMPLEINDEX flag. More modern APIs have more flexible ways to do this.
 
 
