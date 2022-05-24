@@ -50,11 +50,22 @@ By using the SV_Coverage flag we can actually tell which samples of the pixel ar
 #### Storing Poloygon Edges in a Stencil Buffer
 With the knowledge of where the polygon edges are in the image, we can store this data in a stencil buffer.
 
-![Fill the stencil buffer with polygon edge data](Images/MSAA/FillStencilBuffer.png)
+```
+clip(BackBuffer.Sample(filter, In.texCoord).a - 0.5)
+```
 
 With the stencil buffer set, we can execute then two pixel shaders. One running per-pixel and one running per-sample:
 
-![Based on stencil buffer content, run the per-pixel or per-sample shader](Images/MSAA/RunPerSamplePerPixelShader.png)
+```
+// if MSAA is used
+for(int p = 0; p < 2; p++)
+{
+...
+renderer->setDepthState(stencilTest, (p==0)? 0x1 : 0x0);
+renderer->setShader(lighting[p]);
+...
+}
+```
 
 Older platforms support running a per-sample pixel shader like this:
 
