@@ -36,13 +36,13 @@ The God of War team claim they can bake indirect lighting in less than 14 second
 
 What is stopping us from implementing a lightmapper on the GPU? There's a perfectly suitable GPU on the market that has a 1Tb onboard SSD, it costs approximately $8000 USD at the time of writing this post.
 
-That investment will pay off in a week, especially if the team is large.
+That investment will pay off in a week, especially if the team is large 🙂
 
 We often spend all our attention on improving the runtime costs and neglect the build and iteration time costs. If a particular feature requires some form of precomputing, it is highly important to optimize the precomputing to be as fast as possible.
 
 Iteration time is of paramount importance, because:
 * It has a toll on team morale. People get frustrated and annoyed if they have to wait for the long builds, many often leave because of that.
-* It costs a lot of money. Multiply the build or loading times by the hourly wage, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
+* It costs a lot of money. Multiply the build times by the average hourly wage of impacted people, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
 * It's often one of the factors that lead to crunch. Low productivity means it takes more time to get the job done, but the deadlines stay the same.
 
 We need to maintain a reasonable balance to ensure the team is happy and the game ships in time.
