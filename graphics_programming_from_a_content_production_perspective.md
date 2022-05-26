@@ -28,7 +28,18 @@ If this type of activity cannot be automated it has a huge negative value and hi
 
 ### Does this feature substantially impact iteration or build times?
 
-Lightmapping / precomputed indirect lighting immediately comes to mind 🙂
+We often spend all our attention on improving the runtime costs and neglect the build and iteration time costs. If a particular feature requires some form of precomputing, it is highly important to optimize the precomputing to be as fast as possible.
+
+Iteration time is of paramount importance, because:
+* It has a toll on team morale. People get frustrated and annoyed if they have to wait for the long builds, many often leave because of that.
+* It costs a lot of money. Multiply the build times by the average hourly wage of impacted people, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
+* It's often one of the factors that lead to crunch. Low productivity means it takes more time to get the job done, but the deadlines stay the same.
+
+We need to maintain a reasonable balance to ensure the team is happy and the game ships in time.
+
+#### Precomputed indirect lighting and lightmapping
+
+This immediately comes to mind when people mention long precomputing times 🙂
 
 When it comes to lightmapping, I would like to reference this excellent paper: [GPU Driven Indirect Lighting in God of War](https://ubm-twvideo01.s3.amazonaws.com/o1/vault/gdc2019/presentations/Hobson_Josh_The_Indirect_Lighting.pdf).
 
@@ -38,14 +49,7 @@ What is stopping us from implementing a lightmapper on the GPU? There's a perfec
 
 That investment will pay off in a week, especially if the team is large 🙂
 
-We often spend all our attention on improving the runtime costs and neglect the build and iteration time costs. If a particular feature requires some form of precomputing, it is highly important to optimize the precomputing to be as fast as possible.
-
-Iteration time is of paramount importance, because:
-* It has a toll on team morale. People get frustrated and annoyed if they have to wait for the long builds, many often leave because of that.
-* It costs a lot of money. Multiply the build times by the average hourly wage of impacted people, then add an extra hour that is needed to get back into the "flow" - suddenly it's hundreds of thousands of dollars every year, or even more if the team is big.
-* It's often one of the factors that lead to crunch. Low productivity means it takes more time to get the job done, but the deadlines stay the same.
-
-We need to maintain a reasonable balance to ensure the team is happy and the game ships in time.
+#### Node-based material editors
 
 Another interesting topic is node-based material editors. In most cases long shader builds are caused by node-based material editor workflows. So, we have to suggest an alternative authoring workflow that does not generate 100k shaders.
 
