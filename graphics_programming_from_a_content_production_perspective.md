@@ -14,7 +14,7 @@ Here is a small list of things we need to pay extra attention to:
 * Does this feature require additional manual work to function properly?
 * Does this feature substantially impact iteration or build times?
 * Does this feature use perceptual or physically-based parameters for authoring?
-* Does this feature actually increase the content production efficiency?
+* Is it actually worth it to ship and use this feature?
 
 Now let us discuss these in more details!
 
@@ -67,7 +67,7 @@ This falls into the "authoring tools usability". UI itself is usually the respos
 
 The main reasoning for this is to have artists spend less time guessing and randomly tweaking these parameters and focus on what is important - authoring the content. 
 
-### Does this feature actually increase the content production efficiency?
+### Is it actually worth it to ship and use this feature?
 
 We have just evaluated the cost of using this feature in production. We roughly know how much time it would take to implement this feature.
 
