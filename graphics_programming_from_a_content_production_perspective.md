@@ -1,6 +1,5 @@
 ---
 layout: post
-author: Kirill
 date: May 25, 2022
 title: Graphics programming from a content production perspective
 ---
