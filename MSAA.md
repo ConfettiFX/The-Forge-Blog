@@ -1,6 +1,5 @@
 ---
 layout: post
-author: Wolfgang Engel
 date: May 24, 2022
 title: MSAA
 ---
